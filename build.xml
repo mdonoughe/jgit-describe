@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="git-describe" default="all" basedir=".">
+<project name="git-describe" default="jar" basedir=".">
   <target name="build">
     <mkdir dir="bin"/>
     <javac destdir="bin" source="1.5" encoding="UTF-8" debug="on">
@@ -12,15 +12,16 @@
     </javac>
   </target>
 
-  <target name="all" depends="build">
+  <target name="jar" depends="build">
+    <mkdir dir="dist"/>
     <taskdef name="git-describea" classname="org.mdonoughe.JGitDescribeTask" classpath="bin"/>
     <git-describea dir=".git" property="describe"/>
-    <jar destfile="jgit-describe-${describe}.jar">
+    <jar destfile="dist/jgit-describe-${describe}.jar">
       <fileset dir="bin">
         <include name="**/*.class"/>
       </fileset>
     </jar>
-    <taskdef name="git-describe" classname="org.mdonoughe.JGitDescribeTask" classpath="jgit-describe-${describe}.jar"/>
+    <taskdef name="git-describe" classname="org.mdonoughe.JGitDescribeTask" classpath="dist/jgit-describe-${describe}.jar"/>
     <git-describe property="describe"/>
     <echo message="${describe}"/>
   </target>
