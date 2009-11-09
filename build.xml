@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="git-describe" default="all" basedir=".">
+  <target name="build">
+    <mkdir dir="bin"/>
+    <javac destdir="bin" source="1.5" encoding="UTF-8" debug="on">
+      <src path="jgit/org.eclipse.jgit/src"/>
+      <src path="src"/>
+      <include name="org/eclipse/jgit/errors/**/*.java"/>
+      <include name="org/eclipse/jgit/lib/**/*.java"/>
+      <include name="org/eclipse/jgit/util/**/*.java"/>
+      <include name="org/mdonoughe/JGitDescribeTask.java"/>
+    </javac>
+  </target>
+
+  <target name="all" depends="build">
+    <taskdef name="git-describea" classname="org.mdonoughe.JGitDescribeTask" classpath="bin"/>
+    <git-describea dir=".git" property="describe"/>
+    <jar destfile="jgit-describe-${describe}.jar">
+      <fileset dir="bin">
+        <include name="**/*.class"/>
+      </fileset>
+    </jar>
+    <taskdef name="git-describe" classname="org.mdonoughe.JGitDescribeTask" classpath="jgit-describe-${describe}.jar"/>
+    <git-describe property="describe"/>
+    <echo message="${describe}"/>
+  </target>
+</project>
