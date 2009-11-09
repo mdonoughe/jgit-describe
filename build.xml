@@ -14,15 +14,12 @@
 
   <target name="jar" depends="build">
     <mkdir dir="dist"/>
-    <taskdef name="git-describea" classname="org.mdonoughe.JGitDescribeTask" classpath="bin"/>
-    <git-describea dir=".git" property="describe"/>
+    <taskdef name="git-describe" classname="org.mdonoughe.JGitDescribeTask" classpath="bin"/>
+    <git-describe dir=".git" property="describe"/>
     <jar destfile="dist/jgit-describe-${describe}.jar">
       <fileset dir="bin">
         <include name="**/*.class"/>
       </fileset>
     </jar>
-    <taskdef name="git-describe" classname="org.mdonoughe.JGitDescribeTask" classpath="dist/jgit-describe-${describe}.jar"/>
-    <git-describe property="describe"/>
-    <echo message="${describe}"/>
   </target>
 </project>
