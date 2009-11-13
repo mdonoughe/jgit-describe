@@ -154,13 +154,11 @@ public class JGitDescribeTask extends Task {
 
   public void execute() throws BuildException {
     if(property == null) {
-      log("\"property\" attribute must be set!", Project.MSG_ERR);
-      return;
+      throw new BuildException("\"property\" attribute must be set!");
     }
     
     if(!dir.exists()) {
-      log("directory " + dir + " does not exist", Project.MSG_ERR);
-      return;
+      throw new BuildException("directory " + dir + " does not exist");
     }
 
     Repository r = null;
