@@ -177,6 +177,10 @@ public class JGitDescribeTask extends Task {
       throw new BuildException("Could not map commit " + target, e);
     }
 
+    if(c == null) {
+      throw new BuildException("Repository has no HEAD revision");
+    }
+
     Map<ObjectId, String> tagmap = collectTags(r);
 
     List<Commit> taggedparentcommits = candidateCommits(c, tagmap);
