@@ -97,6 +97,8 @@ public class JGitDescribeTask extends Task {
     while(q.size() > 0) {
       Commit commit = q.remove();
       for(ObjectId oid : commit.getParentIds()) {
+        if (seen.contains(oid))
+          continue;
         seen.add(oid);
         try {
           q.add(r.mapCommit(oid));
